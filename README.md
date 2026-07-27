@@ -1,143 +1,231 @@
-# 🌐 web-framework-1771917357-2 - Easy Web Projects Fast
+# Mahamithraa Gupta — Think. Solve. Lead.
 
-[![Download](https://img.shields.io/badge/Download-Get%20Started-brightgreen)](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)
+An interactive 3D portfolio. Nine environments laid out in one continuous world;
+scrolling flies a camera through them along a spline. Every environment has a
+readable DOM counterpart layered over it, so the site is fully usable — and
+indexable — without the 3D layer.
 
-## 📋 About web-framework-1771917357-2
+```bash
+npm install
+npm run dev     # http://localhost:3000
+```
 
-This application is a simple and lightweight tool to help you build websites quickly. It does not need heavy systems or complex setups. Anyone with a Windows PC can use it to create web projects. This guide will help you download and start using it without any programming knowledge.
-
-The tool focuses on speed and ease. It is designed to let you build basic web pages fast. It can serve as a helpful starting point if you want to learn web design or create quick online pages for work or hobbies.
-
-This framework includes basic building blocks for a website, like page layouts, simple navigation, and style controls. You won't need to write complex code. Everything is set up to be easy to edit or update.
-
----
-
-## 🚀 Getting Started with web-framework-1771917357-2
-
-To use web-framework-1771917357-2 on Windows, follow these steps carefully. You don’t need special skills. Just work step-by-step.
-
-### 1. Check Your Computer
-
-Make sure your PC meets these basic requirements:
-
-- Operating System: Windows 10 or later  
-- Disk Space: At least 200 MB free space  
-- Memory: 4 GB RAM or more  
-- Internet connection: Needed to download the files  
-
-If your computer runs Windows 10 or newer, you are ready to begin.
+No environment variables are required to run it.
 
 ---
 
-### 2. Download the Software
+## How it works
 
-You will download the software from the main GitHub page. The page has the latest version and all files you need.
+### One world, one camera
 
-**Click this button to open the download page:**  
+`src/lib/content/sections.ts` is the spatial spine of the project. Each section
+declares where its environment sits in world space and how it wants to be
+looked at:
 
-[![Download](https://img.shields.io/badge/Download-Visit%20Page-blue)](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)
+```ts
+{
+  id: 'projects',
+  origin: [30, 1, -82],
+  view: { yaw: 35 * DEG, pitch: 5 * DEG, distance: 17, shift: 4.6, lift: 0.5 },
+}
+```
 
-Once the page opens, look for a section named “Releases” or “Downloads.” Here, find the latest release version. It usually includes installation files or a zipped folder.
+Camera keyframes are **derived**, not hand-typed:
 
----
+- `yaw` / `pitch` place the camera on a sphere around the environment. Each yaw
+  points back toward the *previous* environment, so the camera always arrives
+  facing the way it travelled — that is what makes the transitions read as one
+  flight rather than nine cuts.
+- `distance` controls how much of the frame the environment fills.
+- `shift` slides the look-at target sideways so the environment lands in the
+  free right-hand side of the frame, beside the copy panel.
+- `turn` (optional) angles an environment away from face-on. The leadership
+  bridge needs it: viewed head-on, a line of crystals collapses to a point.
 
-### 3. Save the Downloaded File
+`CameraRig` threads those keyframes onto a `CatmullRomCurve3` and samples it
+with `getPoint(t)` — parameter space, so `t = i/(n-1)` lands exactly on
+keyframe `i`. (`getPointAt` re-parameterises by arc length and would drift the
+camera off its keyframes wherever environment spacing is uneven, which it is by
+design.)
 
-After you click the link for the latest release, download the file to a location you can find easily, like your Desktop or Downloads folder. 
+### Scroll is anchored to the DOM, not to page height
 
-If the file is zipped (ends with .zip), you will need to extract it after downloading.
+`SmoothScrollProvider` measures the real `offsetTop` of every section element
+and maps scroll position piecewise between those anchors. Deriving progress from
+`scrollY / documentHeight` instead would desynchronise the camera from the copy
+the moment a footer existed or a section grew past one viewport.
 
----
+### Two-tier state
 
-### 4. Extract (Unzip) the Files
+`src/lib/store.ts` splits state deliberately:
 
-If your download is a zip file:
+- **`mutable`** — scroll progress, pointer position, focus blend. Read every
+  frame inside `useFrame`, never through React. Moving the mouse costs zero
+  renders.
+- **`useUi`** — active section, open project, hovered skill. A
+  `useSyncExternalStore` selector store, so a component re-renders only when the
+  slice it reads actually changes.
 
-- Right-click on the file  
-- Choose “Extract All...”  
-- Select a folder where you want to extract your files (use Desktop or Documents for easy access)  
-- Click “Extract”  
+### Only three environments exist at once
 
-This creates a folder with all the program files inside.
-
----
-
-### 5. Run the Application
-
-Locate the extracted folder and look for a file named something like `start.exe` or `launch.exe`. You may find it named after the framework itself.
-
-Double-click this file to open the program. If Windows asks for permission to run the app, click “Yes” or “Run.”
-
-The software window should open, showing you a simple user interface with menus and options.
-
----
-
-## ⚙️ Using web-framework-1771917357-2
-
-Once the program is running:
-
-- You can start creating a new web project by clicking “New Project” or a similar button.
-- Use the templates available to build pages without writing code.
-- Basic navigation tools let you add pages, links, and images.
-- The style settings allow you to change colors, fonts, and layout easily.
-
-The interface is designed to guide you step-by-step with clear buttons and labels.
-
----
-
-## 🛠 System Settings and Options
-
-web-framework-1771917357-2 offers these basic options:
-
-- File saving: Projects save locally on your computer. You can open and edit them anytime.
-- Export: You can export your site as a folder with HTML, CSS, and assets to upload to a website host.
-- Preview: Use the built-in preview option to see how your website will look in a browser.
-- Help: Find simple help links within the app if you need guides or tips.
+`SceneGate` mounts an environment only while the camera is within one section of
+it, cross-fades the transition, and unmounts to free GPU memory. This is the
+main reason cost stays flat as sections are added.
 
 ---
 
-## 🔄 Updates and Support
+## Structure
 
-To get the latest version:
-
-1. Visit the GitHub page regularly:  
-   https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip  
-2. Download the newest release file when available.  
-3. Replace the old version by repeating the installation steps.
-
-If you face any issue running the software, check for an FAQ or help folder included in the extracted files. You can also open GitHub Issues on that page to report bugs or ask questions from the developers.
-
----
-
-## 💻 Advanced Tips (Optional)
-
-For those curious how this works behind the scenes:
-
-- The framework uses simple programming to build site pages quickly.
-- It creates HTML and CSS files that any web browser can read.
-- You can edit the exported web files using any text editor if you want to learn or customize more deeply.
-
-You don’t need to use these tips right away but may find them useful as you get more comfortable with the software.
-
----
-
-## 📝 Summary of Steps to Download and Run
-
-1. Check that you run Windows 10 or later and have space available.  
-2. Click the green or blue download badges above to visit the GitHub page.  
-3. Find and download the latest release file.  
-4. Extract the zip file if needed.  
-5. Double-click the main exe file to open the program.  
-6. Use on-screen menus to create and preview web projects.  
-7. Save and export your work to share or upload online.  
-
----
-
-## 🔗 Quick Links
-
-- [GitHub main page to download and view instructions](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)  
-- [Download page for releases](https://github.com/maxieee/web-framework-1771917357-2/raw/refs/heads/main/tilasite/framework_web_v2.3.zip)
+```
+src/
+├── app/                        route handlers, metadata, SEO, error boundaries
+│   ├── api/contact/route.ts    validated + rate-limited contact endpoint
+│   ├── opengraph-image.tsx     social card, generated at request time
+│   ├── layout.tsx              metadata, Person JSON-LD, font preload
+│   ├── error.tsx               route-level boundary
+│   └── global-error.tsx        root-layout boundary
+├── components/
+│   ├── canvas/
+│   │   ├── camera-rig.tsx      spline flight, parallax, roll, focus blend
+│   │   ├── scene-gate.tsx      mount/unmount + fade per environment
+│   │   ├── lighting-rig.tsx    lightformer environment (no HDRI download)
+│   │   ├── particle-field.tsx  GPU-driven ambient dust, one draw call
+│   │   ├── sky-dome.tsx        procedural nebula + stars
+│   │   ├── effects.tsx         bloom, grain, vignette, SMAA
+│   │   ├── shaders/            five custom materials, GLSL as typed modules
+│   │   ├── primitives/         glass panel, 3D text, GLB slot
+│   │   └── scenes/             the nine environments
+│   ├── sections/               the DOM counterpart of each environment
+│   ├── layout/                 preloader, nav, rail, cursor, footer
+│   ├── providers/              Lenis smooth scroll, pointer tracking
+│   └── ui/                     shadcn/ui primitives
+├── hooks/                      reduced motion, device profile, magnetic, tilt
+├── lib/
+│   ├── content/                all copy and data, typed
+│   ├── store.ts                two-tier state
+│   ├── motion.ts               shared easing tokens
+│   └── utils.ts                cn(), damping helpers, frame-delta cap
+└── types/
+```
 
 ---
 
-This guide shows how to get the software up and running with no need for coding experience. Follow these instructions carefully to start building simple websites today.
+## Editing content
+
+Everything is typed data — no copy is hard-coded in components.
+
+| What | Where |
+| --- | --- |
+| Name, headline, tagline, socials, SEO | `src/lib/content/profile.ts` |
+| Skill galaxy (nodes, links, orbits) | `src/lib/content/skills.ts` |
+| Case studies | `src/lib/content/projects.ts` |
+| Milestones, experience, certifications, achievements | `src/lib/content/career.ts` |
+| World layout and camera framing | `src/lib/content/sections.ts` |
+
+Adding a skill adds a node to the 3D galaxy, a chip to the DOM panel and an
+entry in the `knowsAbout` JSON-LD, all from the one edit.
+
+### Project artwork
+
+`public/images/projects/*.svg` are generated schematics — each one diagrams the
+project it fronts. Regenerate with:
+
+```bash
+node scripts/generate-placeholders.mjs
+```
+
+Drop a real screenshot in at the same path and it is picked up with no code
+change.
+
+### 3D models
+
+The repo ships **no binary model assets**; every environment is procedural
+geometry and shaders. `<ModelSlot />` renders a stand-in when a model is absent
+or fails to load, so adding one never breaks anything and removing one never
+leaves a hole. The Draco decoder is vendored in `public/draco/`, so compressed
+GLBs load with no CDN involved. See `public/models/README.md`.
+
+---
+
+## Contact form
+
+`POST /api/contact` validates with zod, applies a fixed-window rate limit and
+carries a honeypot field.
+
+- With `RESEND_API_KEY` **and** `CONTACT_FROM_EMAIL` set, it delivers the
+  message.
+- With neither set, it validates and responds `{ ok: true, delivered: false }`,
+  and the UI shows a prefilled mailto fallback.
+
+The rate limiter is per-instance and in-memory — deliberate for a low-volume
+endpoint. For a multi-region deploy, swap the `hits` map for a shared store; the
+call sites do not change.
+
+See `.env.example`.
+
+---
+
+## Performance
+
+- The WebGL bundle is `ssr: false` dynamic — three.js never enters the server
+  bundle, and the shell paints before the canvas loads.
+- `useDeviceProfile` picks a rendering budget once on mount (DPR, particle
+  count, shadows, post-processing) from cores, memory and viewport.
+- `AdaptiveDpr` drops resolution under sustained load; `AdaptiveEvents` skips
+  raycasts while the camera is moving fast.
+- Particles are one draw call; all drift, cursor repulsion and twinkle are in
+  the vertex/fragment shaders.
+- Constellation links are transformed unit cylinders — no geometry rebuilt per
+  frame.
+- Per-frame delta is capped at `MAX_FRAME_DELTA` (1/15s). The cap has to sit
+  below the slowest frame rate you still want animating correctly: a 1/30 cap
+  made everything run in slow motion under 30fps.
+- Fonts are self-hosted; the lighting environment is built from lightformers
+  rather than a downloaded HDRI. The site renders correctly with no external
+  network access at all.
+
+---
+
+## Accessibility
+
+- The canvas is `aria-hidden`. Every piece of content it displays also exists as
+  real text in the DOM — the 3D layer is an enhancement, never the only copy.
+- Reduced motion is honoured in CSS *and* in the render loop: cameras hold
+  still, scenes stop drifting, scroll damping collapses.
+- Section navigation works by keyboard (Page Up/Down, Home/End, Escape to back
+  out of any detail view). Ordinary arrow-key scrolling and tab order are left
+  alone.
+- Nav items are real anchors to real section elements, so in-page navigation
+  survives with JavaScript disabled.
+- Every 3D interaction has a DOM equivalent: skill nodes have chips, monoliths
+  have cards, capsules have buttons.
+- A directional scrim sits behind each copy column to hold body text above WCAG
+  AA contrast over a moving scene.
+- If WebGL is unavailable or the renderer dies, an error boundary degrades to a
+  static gradient backdrop and the site remains fully readable.
+
+---
+
+## SEO
+
+Metadata, OpenGraph and Twitter cards in `app/layout.tsx`; a generated social
+image at `app/opengraph-image.tsx`; `sitemap.xml` and `robots.txt` as route
+handlers; and a `schema.org/Person` graph built from the same typed content that
+renders the page.
+
+Set `NEXT_PUBLIC_SITE_URL` before deploying so canonical and OG URLs resolve.
+
+---
+
+## Scripts
+
+| Command | Does |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm start` | Serve the production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | `tsc --noEmit` |
+
+Built with Next.js 15 (App Router), TypeScript (strict), React Three Fiber,
+drei, three.js, GSAP, Framer Motion, Lenis, Tailwind CSS, shadcn/ui and Lucide.
