@@ -10,6 +10,16 @@ import { POWER3_OUT } from '@/lib/motion';
 import { SectionShell } from './section-shell';
 import { Badge } from '@/components/ui/badge';
 
+const SKILL_ANALYTICS = (['domain', 'tooling', 'human'] as const).map((category) => {
+  const skills = SKILLS.filter((skill) => skill.category === category);
+  return {
+    category,
+    label: SKILL_CATEGORY_LABEL[category],
+    average: Math.round(skills.reduce((total, skill) => total + skill.level, 0) / skills.length),
+    levels: skills.map((skill) => skill.level),
+  };
+});
+
 /**
  * Skills panel.
  *
@@ -41,9 +51,50 @@ export function SkillsSection() {
         </>
       }
       lede="Domain judgement, the tooling to evidence it, and the human skills to move it through an organisation. Select any capability to see how I actually use it."
-    >
-      <div className="flex flex-col gap-8">
-        <ul className="flex flex-wrap gap-2" aria-label="Skills">
+      >
+        <div className="flex flex-col gap-8">
+          <div className="grid gap-3 sm:grid-cols-3" aria-label="Skills overview">
+            {SKILL_ANALYTICS.map((item, index) => (
+              <motion.article
+                key={item.category}
+                className="glass rounded-2xl p-5"
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.65, ease: POWER3_OUT, delay: index * 0.06 }}
+              >
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="text-xs uppercase tracking-widest text-muted">{item.label}</p>
+                  <p className="font-mono text-lg text-white">{item.average}%</p>
+                </div>
+                <div className="mt-4 flex h-9 items-end gap-1" aria-hidden="true">
+                  {item.levels.map((level, levelIndex) => (
+                    <motion.span
+                      key={`${item.category}-${levelIndex}`}
+                      className="flex-1 rounded-t bg-gradient-to-t from-accent/35 to-glow/80"
+                      initial={{ scaleY: 0 }}
+                      whileInView={{ scaleY: level / 100 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.7, ease: POWER3_OUT, delay: 0.12 + levelIndex * 0.07 }}
+                      style={{ height: '100%', transformOrigin: 'bottom' }}
+                    />
+                  ))}
+                </div>
+                <div className="mt-3 h-px overflow-hidden bg-hairline">
+                  <motion.span
+                    className="block h-full bg-accent"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: item.average / 100 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.9, ease: POWER3_OUT, delay: 0.15 }}
+                    style={{ transformOrigin: 'left' }}
+                  />
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <ul className="flex flex-wrap gap-2" aria-label="Skills">
           {SKILLS.map((skill) => {
             const active = activeSkill === skill.id;
             return (
@@ -134,8 +185,8 @@ export function SkillsSection() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                Ten capabilities orbit in the galaxy behind this panel. Select one — here or in
-                the scene — to read how it gets used in practice.
+                Ten capabilities orbit in the galaxy behind this panel. Select one here or in
+                the scene to see how it is used in practice.
               </motion.p>
             )}
           </AnimatePresence>

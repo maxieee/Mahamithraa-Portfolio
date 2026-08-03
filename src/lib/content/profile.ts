@@ -4,15 +4,15 @@ export const PROFILE = {
   name: 'Mahamithraa Gupta',
   shortName: 'Mahamithraa',
   headline: ['Think.', 'Solve.', 'Lead.'] as const,
-  role: 'Business Analyst',
-  disciplines: ['Business Analysis', 'Operations', 'Finance', 'Leadership'] as const,
+  role: 'Operations & Finance Professional',
+  disciplines: ['Operations', 'Finance', 'Leadership'] as const,
   location: 'Coimbatore, India',
   tagline:
-    'I turn ambiguous business problems into decisions leadership can act on — through analysis, operating rhythm and the discipline to ship.',
+    'I turn ambiguous business problems into decisions leadership can act on through analysis, operating rhythm and the discipline to ship.',
   summary:
-    'Business analyst working at the intersection of operations, finance and leadership. I build the models, dashboards and operating cadence that let teams see clearly and move quickly — then I lead the people who run them.',
+    'I thrive at the intersection of business, operations, finance, and strategy. By transforming complex data into meaningful insights, I help organizations make confident decisions, optimize processes, improve performance, and drive sustainable growth. My approach combines analytical thinking, operational excellence, and collaborative leadership to deliver measurable business impact.',
   availability: 'Open to Business Analyst, Strategy & Founder\'s Office roles',
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'lathaguptha19s@gmail.com',
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'mahamithraa010@gmail.com',
 } as const;
 
 export const SOCIALS: SocialLink[] = [
@@ -38,9 +38,9 @@ export const SOCIALS: SocialLink[] = [
 
 export const SITE = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://mahamithraa.vercel.app',
-  title: 'Mahamithraa Gupta — Think. Solve. Lead.',
+  title: 'Mahamithraa Gupta | Think. Solve. Lead.',
   description:
-    'Interactive 3D portfolio of Mahamithraa Gupta — Business Analyst working across operations, finance and leadership. Case studies in macroeconomic risk, analytics dashboards and programme design.',
+    'Interactive 3D portfolio of Mahamithraa Gupta, a business analyst working across operations, finance, and leadership. Case studies in macroeconomic risk, analytics dashboards, and programme design.',
   keywords: [
     'Mahamithraa Gupta',
     'Business Analyst',

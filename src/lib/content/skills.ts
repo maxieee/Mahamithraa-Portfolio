@@ -31,7 +31,7 @@ export const SKILLS: Skill[] = [
     category: 'tooling',
     level: 88,
     summary:
-      'Semantic models, DAX measures and executive dashboards designed for a single glance — not a data dump.',
+      'Semantic models, DAX measures, and executive dashboards designed for a single glance, not a data dump.',
     links: ['excel', 'sql'],
     orbit: { radius: 3.6, inclination: -0.34, phase: 0.9, speed: 0.085 },
   },
@@ -71,7 +71,7 @@ export const SKILLS: Skill[] = [
     category: 'tooling',
     level: 72,
     summary:
-      'MM and FICO transaction flows — reading master data, reconciling postings and mapping them to operational reality.',
+      'MM and FICO transaction flows, including reading master data, reconciling postings, and mapping them to operational reality.',
     links: ['operations', 'excel'],
     orbit: { radius: 5.4, inclination: -0.46, phase: 4.4, speed: 0.055 },
   },
@@ -101,7 +101,7 @@ export const SKILLS: Skill[] = [
     category: 'human',
     level: 91,
     summary:
-      'Hypothesis-led structuring — MECE issue trees, driver decomposition and knowing which analysis will actually change the decision.',
+      'Hypothesis-led structuring, MECE issue trees, driver decomposition, and choosing analysis that can change the decision.',
     links: ['business-analysis', 'python'],
     orbit: { radius: 3.2, inclination: -0.6, phase: 1.3, speed: 0.102 },
   },

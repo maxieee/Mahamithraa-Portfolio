@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Medal, Mic, Trophy } from 'lucide-react';
+import { ArrowUpRight, Award, Medal, Mic, Trophy } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { ACHIEVEMENTS } from '@/lib/content/career';
 import { SECTION_BY_ID } from '@/lib/content/sections';
@@ -45,6 +45,16 @@ function AchievementCard({ achievement, index }: { achievement: Achievement; ind
       </div>
 
       <p className="text-pretty text-meta leading-relaxed text-muted">{achievement.detail}</p>
+      <a
+        href={achievement.proofUrl ?? '#'}
+        target={achievement.proofUrl && achievement.proofUrl !== '#' ? '_blank' : undefined}
+        rel={achievement.proofUrl && achievement.proofUrl !== '#' ? 'noreferrer noopener' : undefined}
+        title={achievement.proofUrl === '#' ? 'Proof link to be added' : undefined}
+        className="mt-auto inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-accent transition-colors hover:text-white"
+      >
+        View Proof
+        <ArrowUpRight aria-hidden="true" className="size-3.5" />
+      </a>
     </motion.div>
   );
 }

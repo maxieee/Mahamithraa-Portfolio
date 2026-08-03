@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { EXPERIENCE } from '@/lib/content/career';
 import { SECTION_BY_ID } from '@/lib/content/sections';
 import { POWER3_OUT } from '@/lib/motion';
@@ -61,6 +62,16 @@ export function ExperienceSection() {
                 </li>
               ))}
             </ul>
+            <a
+              href={entry.certificateUrl ?? '#'}
+              target={entry.certificateUrl && entry.certificateUrl !== '#' ? '_blank' : undefined}
+              rel={entry.certificateUrl && entry.certificateUrl !== '#' ? 'noreferrer noopener' : undefined}
+              title={entry.certificateUrl === '#' ? 'Certificate link to be added' : undefined}
+              className="mt-4 inline-flex w-fit items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-accent transition-colors hover:text-white"
+            >
+              View Certificate
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </a>
           </motion.li>
         ))}
       </ul>

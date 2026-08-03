@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { MILESTONES } from '@/lib/content/career';
 import { SECTION_BY_ID } from '@/lib/content/sections';
 import { POWER3_OUT } from '@/lib/motion';
@@ -23,7 +24,7 @@ export function LeadershipSection() {
           one step at a time.
         </>
       }
-      lede="Every one of these was elected or appointed by people who had watched me work. The scope changed; the job — set direction, distribute ownership, hold the standard — did not."
+      lede="Each role was earned through the trust of people who had seen me work. The scope changed, but the responsibility remained the same: set direction, distribute ownership, and maintain a high standard."
     >
       <ol className="relative mt-2 flex flex-col gap-7">
         {/* Spine mirroring the bridge in the 3D scene. */}
@@ -62,6 +63,16 @@ export function LeadershipSection() {
             <p className="mt-3 max-w-2xl text-pretty text-meta leading-relaxed text-muted">
               {milestone.description}
             </p>
+            <a
+              href={milestone.proofUrl ?? '#'}
+              target={milestone.proofUrl && milestone.proofUrl !== '#' ? '_blank' : undefined}
+              rel={milestone.proofUrl && milestone.proofUrl !== '#' ? 'noreferrer noopener' : undefined}
+              title={milestone.proofUrl === '#' ? 'Proof link to be added' : undefined}
+              className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-accent transition-colors hover:text-white"
+            >
+              View Proof
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </a>
           </motion.li>
         ))}
       </ol>

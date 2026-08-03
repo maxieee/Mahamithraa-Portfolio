@@ -68,6 +68,7 @@ export interface Milestone {
   description: string;
   /** Future milestones render as an unlit, wireframe crystal. */
   future?: boolean;
+  proofUrl?: string;
 }
 
 export interface ExperienceEntry {
@@ -78,6 +79,7 @@ export interface ExperienceEntry {
   location: string;
   summary: string;
   achievements: string[];
+  certificateUrl?: string;
 }
 
 export interface Certification {
@@ -87,6 +89,7 @@ export interface Certification {
   year: string;
   focus: string;
   credentialSummary: string;
+  verificationUrl?: string;
 }
 
 export interface Achievement {
@@ -97,6 +100,7 @@ export interface Achievement {
   detail: string;
   /** Drives the trophy geometry variant in the 3D trophy room. */
   form: 'cup' | 'star' | 'ring' | 'obelisk';
+  proofUrl?: string;
 }
 
 export interface SocialLink {

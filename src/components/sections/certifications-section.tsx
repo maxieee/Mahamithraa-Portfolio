@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { CERTIFICATIONS } from '@/lib/content/career';
 import { SECTION_BY_ID } from '@/lib/content/sections';
 import { setUi, useUi } from '@/lib/store';
@@ -40,7 +40,7 @@ export function CertificationsSection() {
             the instinct.
           </>
         }
-        lede="Certifications are not the skill — but they are how I made sure the fundamentals were properly learned rather than half-absorbed on the job."
+        lede="These courses gave structure to skills I use in real work. They helped me strengthen my foundations in analysis, process improvement, project delivery, and finance."
       >
         <ul className="mt-4 grid max-w-3xl gap-4 sm:grid-cols-3">
           {CERTIFICATIONS.map((certification, index) => (
@@ -87,7 +87,6 @@ export function CertificationsSection() {
                 <DialogDescription>{active.issuer}</DialogDescription>
               </DialogHeader>
 
-              {/* Certificate face — the DOM twin of the capsule interior. */}
               <div className="mt-7 rounded-xl border border-glow/25 bg-gradient-to-br from-surface to-void p-8">
                 <p className="text-eyebrow uppercase text-muted">Credential</p>
                 <p className="mt-4 text-pretty leading-relaxed text-white/90">
@@ -96,6 +95,16 @@ export function CertificationsSection() {
                 <p className="mt-6 border-t border-hairline pt-4 text-xs uppercase tracking-widest text-muted">
                   {active.year}
                 </p>
+                <a
+                  href={active.verificationUrl ?? '#'}
+                  target={active.verificationUrl && active.verificationUrl !== '#' ? '_blank' : undefined}
+                  rel={active.verificationUrl && active.verificationUrl !== '#' ? 'noreferrer noopener' : undefined}
+                  title={active.verificationUrl === '#' ? 'Credential link to be added' : undefined}
+                  className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-glow transition-colors hover:text-white"
+                >
+                  Verify Credential
+                  <ArrowUpRight aria-hidden="true" className="size-3.5" />
+                </a>
               </div>
             </div>
           ) : null}
